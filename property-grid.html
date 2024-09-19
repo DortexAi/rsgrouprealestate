@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>EstateAgency Bootstrap Template</title>
+  <title>RS Group</title>
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
   <meta content="" name="keywords">
   <meta content="" name="description">
@@ -89,21 +89,34 @@
       <div class="row">
         <div class="col-md-12 col-lg-8">
           <div class="title-single-box">
-            <h1 class="title-single">Calculator</h1>
-            <span class="color-text-a">Calculator</span>
+            <h1 class="title-single">EMI Calculator</h1>
+          </div> 
+        </div>
+        <section class="container emi-calculator">
+          <h2 class="text-center">EMI Calculator</h2>
+          <form id="emiForm">
+            <div class="form-group">
+              <label for="principal">Loan Amount (₹):</label>
+              <input type="number" class="form-control" id="principal" placeholder="Enter loan amount" required>
+            </div>
+            <div class="form-group">
+              <label for="rate">Annual Interest Rate (%):</label>
+              <input type="number" class="form-control" id="rate" placeholder="Enter interest rate" step="0.01" required>
+            </div>
+            <div class="form-group">
+              <label for="tenure">Loan Tenure (Years):</label>
+              <input type="number" class="form-control" id="tenure" placeholder="Enter loan tenure" required>
+            </div>
+            <button type="button" class="btn btn-primary btn-block" onclick="calculateEMI()">Calculate EMI</button>
+          </form>
+      
+          <div class="result-box" id="resultBox">
+            <h4>EMI Details:</h4>
+            <p>Monthly EMI: ₹<span id="emiResult"></span></p>
+            <p>Total Payment: ₹<span id="totalPayment"></span></p>
+            <p>Total Interest: ₹<span id="totalInterest"></span></p>
           </div>
-        </div>
-        <div class="col-md-12 col-lg-4">
-          <nav aria-label="breadcrumb" class="breadcrumb-box d-flex justify-content-lg-end">
-            <ol class="breadcrumb">
-              <li class="breadcrumb-item">
-                <a href="#">Home</a>
-              </li>
-              <li class="breadcrumb-item active" aria-current="page">
-                Calculator              </li>
-            </ol>
-          </nav>
-        </div>
+        </section>
       </div>
     </div>
   </section>
@@ -117,14 +130,7 @@
           <div class="widget-a">
             <div class="w-header-a">
               <h3 class="w-title-a text-brand">RS GROUP</h3>
-            </div>
-            <div class="w-body-a">
-              <p class="w-text-a color-text-a">
-                A stable, progressive delivery oriented builder. RS Group is a trusted name in the real estate market of the Tricity region.
-                  Having delivered so many Homes and Plots in the last 12+ years, RS Group is a reliable and credible developer leading the charge of the real estate industry in the region through a deep understanding of buyer’s demand and a market’s sentiment via innovation and research.
-                  With RS Group, the buyer is able to avail to the chance to build their dream home at desirable locations amidst unique features and practical amenities - living life to its complete potential.
-              </p>
-            </div>
+            </div>  
             <div class="w-footer-a">
               <ul class="list-unstyled">
                 <li class="color-a">
@@ -134,11 +140,11 @@
               </ul>
             </div>
           </div>
-        </div>
-          
+        </div> 
       </div>
     </div>
   </section>
+
   <footer>
     <div class="container">
       <div class="row">
@@ -187,11 +193,6 @@
                   <i class="fa fa-pinterest-p" aria-hidden="true"></i>
                 </a>
               </li>
-              <!-- <li class="list-inline-item">
-                <a href="#">
-                  <i class="fa fa-dribbble" aria-hidden="true"></i>
-                </a>
-              </li> -->
             </ul>
           </div>
           <div class="copyright-footer">
@@ -222,6 +223,33 @@
 
   <!-- Template Main Javascript File -->
   <script src="js/main.js"></script>
+<!-- Custom JavaScript for EMI Calculator -->
+<script>
+  function calculateEMI() {
+    // Get form values
+    const principal = parseFloat(document.getElementById("principal").value);
+    const annualRate = parseFloat(document.getElementById("rate").value);
+    const tenure = parseInt(document.getElementById("tenure").value);
 
+    // Calculate monthly interest rate
+    const monthlyRate = annualRate / 12 / 100;
+
+    // Calculate total months
+    const months = tenure * 12;
+
+    // EMI Formula
+    const emi = (principal * monthlyRate * Math.pow(1 + monthlyRate, months)) / (Math.pow(1 + monthlyRate, months) - 1);
+
+    // Total payment and interest
+    const totalPayment = emi * months;
+    const totalInterest = totalPayment - principal;
+
+    // Show the results
+    document.getElementById("emiResult").textContent = emi.toFixed(2);
+    document.getElementById("totalPayment").textContent = totalPayment.toFixed(2);
+    document.getElementById("totalInterest").textContent = totalInterest.toFixed(2);
+    document.getElementById("resultBox").style.display = "block";
+  }
+</script>
 </body>
 </html>
